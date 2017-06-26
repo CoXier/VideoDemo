@@ -51,6 +51,12 @@ public class IjkPlayerActivity extends BaseActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        mIMediaPlayer.pause();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mIMediaPlayer.release();
@@ -72,19 +78,4 @@ public class IjkPlayerActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
-
-    }
-
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
-        mIMediaPlayer.pause();
-        return false;
-    }
-
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-
-    }
 }

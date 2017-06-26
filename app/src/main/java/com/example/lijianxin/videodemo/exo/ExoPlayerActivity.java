@@ -1,10 +1,7 @@
 package com.example.lijianxin.videodemo.exo;
 
-import android.graphics.SurfaceTexture;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 
 import com.example.lijianxin.videodemo.AppData;
 import com.example.lijianxin.videodemo.BaseActivity;
@@ -32,7 +29,6 @@ public class ExoPlayerActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Handler mainHandler = new Handler();
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         TrackSelection.Factory videoTrackSelectionFactory =
                 new AdaptiveTrackSelection.Factory(bandwidthMeter);
@@ -54,30 +50,18 @@ public class ExoPlayerActivity extends BaseActivity {
     }
 
     @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-//        preparePlayer();
+    protected void onPause() {
+        super.onPause();
+        mPlayer.setPlayWhenReady(false);
     }
 
     @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
-
-    }
-
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
-
-        return false;
-    }
-
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-
+    protected void onResume() {
+        super.onResume();
+        mPlayer.setPlayWhenReady(true);
     }
 
     private void preparePlayer() {
-        Log.d(TAG,"player");
-        // Measures bandwidth during playback. Can be null if not required.
-        DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         // Produces DataSource instances through which media data is loaded.
         DataSource.Factory dataSourceFactory = new DefaultHttpDataSourceFactory(Util.getUserAgent(this,"VideoDemo"),null,
                 DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,
@@ -90,6 +74,5 @@ public class ExoPlayerActivity extends BaseActivity {
                 dataSourceFactory, extractorsFactory, null, null);
         // Prepare the player with the source.
         mPlayer.prepare(videoSource);
-        mPlayer.setPlayWhenReady(true);
     }
 }
