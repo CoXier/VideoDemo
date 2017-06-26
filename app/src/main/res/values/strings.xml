@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">VideoDemo</string>
+    <string name="media_player">MediaPlayer</string>
+    <string name="ijk_player">IjkPlayer</string>
+    <string name="exo_player">ExoPlayer</string>
+    <string name="own_player">OwnPlayer</string>
+</resources>
